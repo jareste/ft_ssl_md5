@@ -1,4 +1,4 @@
-NAME = ft_ping
+NAME = ft_ssl
 
 #########
 RM = rm -rf
@@ -8,11 +8,11 @@ LDFLAGS = -lm
 #########
 
 #########
-FILES = main 
+FILES = main md5
 
 SRC = $(addsuffix .c, $(FILES))
 
-vpath %.c srcs srcs/ping
+vpath %.c srcs srcs/md5
 #########
 
 #########
@@ -24,11 +24,10 @@ DEP = $(addsuffix .d, $(basename $(OBJ)))
 #########
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
-	${CC} -MMD $(CFLAGS) -c -Isrcs/ping $< -o $@
+	${CC} -MMD $(CFLAGS) -c -Isrcs/md5 $< -o $@
 
 all: 
 	$(MAKE) $(NAME)
-	cp $(NAME) /bin/.
 
 $(NAME): $(OBJ) Makefile
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
