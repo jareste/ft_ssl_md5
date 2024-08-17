@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 {
     int flags = 0;
     char* encrypt = NULL;
+    char* filename = NULL;
 
     if (argc < 2)
     {
@@ -23,7 +24,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    parse_args(argc, argv, &flags, &encrypt);
+    parse_args(argc, argv, &flags, &encrypt, &filename);
 
     if (strcmp(argv[1], "md5") == 0)
     {

@@ -31,11 +31,9 @@ static void read_stdin(char **encrypt) {
     *encrypt = buffer;
 }
 
-void parse_args(int argc, char *argv[], int *flags, char** encrypt)
+void parse_args(int argc, char *argv[], int *flags, char** encrypt, char** filename)
 {
     int opt;
-
-    read_stdin(encrypt);
 
     while ((opt = getopt(argc, argv, "v?hl:nqft:i:DW:")) != -1)
     {
@@ -55,5 +53,11 @@ void parse_args(int argc, char *argv[], int *flags, char** encrypt)
         fprintf(stderr, "Expected argument after options\n");
         // print_usage();
         exit(1);
+    }
+
+    /* no input recieved, read from stdin. */
+    if (*encrypt == NULL)
+    {
+        read_stdin(encrypt);
     }
 }
