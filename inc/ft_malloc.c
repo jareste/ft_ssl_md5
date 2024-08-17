@@ -5,11 +5,20 @@
 
 #undef malloc
 
-#define ft_assert(expr, message) \
-    if (!(expr)) { \
-        fprintf(stderr, "Assertion failed: %s\nFile: %s, Line: %d\n", message, __FILE__, __LINE__); \
-        abort(); \
-    }
+#ifdef NDEBUG
+
+    #define ft_assert(expr, message) \
+        if (!(expr)) { \
+            fprintf(stderr, "Assertion failed: %s\nFile: %s, Line: %d\n", message, __FILE__, __LINE__); \
+            abort(); \
+        }
+#else
+    #define ft_assert(expr, message) \
+        if (!(expr)) { \
+            fprintf(stderr, "Assertion failed: %s\nFile: %s, Line: %d\n", message, __FILE__, __LINE__); \
+            exit(EXIT_FAILURE); \
+        }
+#endif
 
 void* ft_malloc(size_t size)
 {

@@ -5,6 +5,7 @@ RM = rm -rf
 CC = cc
 CFLAGS = -Werror -Wextra -Wall
 LDFLAGS = -lm
+RELEASE_CFLAGS = $(CFLAGS) -DNDEBUG
 #########
 
 #########
@@ -33,6 +34,10 @@ $(NAME): $(OBJ) Makefile
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
 	@echo "EVERYTHING DONE  "
 
+release: CFLAGS = $(RELEASE_CFLAGS)
+release: re
+	@echo "RELEASE BUILD DONE  "
+
 clean:
 	$(RM) $(OBJ) $(DEP)
 	$(RM) -r $(OBJ_DIR)
@@ -44,6 +49,6 @@ fclean: clean
 
 re:	fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re release
 
 -include $(DEP)
