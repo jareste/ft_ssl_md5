@@ -35,12 +35,28 @@ void parse_args(int argc, char *argv[], int *flags, char** encrypt, char** filen
 {
     int opt;
 
-    while ((opt = getopt(argc, argv, "v?hl:nqft:i:DW:")) != -1)
+    
+
+    UNUSED_PARAM(filename);
+    while ((opt = getopt(argc, argv, "?hpqrs:")) != -1)
     {
         switch (opt)
         {
-            case 'v':
+            case '?':
+            case 'h':
+                // print_usage();
+                exit(0);
+            case 'p':
                 *flags |= P_FLAG;
+                break;
+            case 'q':
+                *flags |= Q_FLAG;
+                break;
+            case 'r':
+                *flags |= R_FLAG;
+                break;
+            case 's':
+                *encrypt = strdup(optarg);
                 break;
             default:
                 // print_usage();
