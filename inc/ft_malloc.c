@@ -4,6 +4,7 @@
 #include <assert.h>
 
 #undef malloc
+#undef realloc
 
 #ifdef NDEBUG
 
@@ -25,4 +26,11 @@ void* ft_malloc(size_t size)
     void *ptr = malloc(size);
     ft_assert(ptr != NULL, "malloc failed");
     return ptr;
+}
+
+void* ft_realloc(void *ptr, size_t size)
+{
+    void* new_ptr = realloc(ptr, size);
+    ft_assert(new_ptr != NULL, "realloc failed");
+    return new_ptr;
 }

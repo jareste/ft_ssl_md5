@@ -4,6 +4,12 @@
 #include <string.h>
 #include <ft_malloc.h>
 
+/*
+    implementation of md5 algorithm
+    Source:
+    https://en.wikipedia.org/wiki/MD5
+*/
+
 typedef struct
 {
     uint32_t h[4];

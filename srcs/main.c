@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <ft_malloc.h>
+#include <parse_arg.h>
 
 /* TODO */
 void usage()
@@ -13,10 +14,8 @@ void usage()
 
 int main(int argc, char **argv)
 {
-    char buffer[1024] = {0};
-
-    while (fgets(buffer, sizeof(buffer), stdin)) {
-    }
+    int flags = 0;
+    char* encrypt = NULL;
 
     if (argc < 2)
     {
@@ -24,9 +23,11 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    parse_args(argc, argv, &flags, &encrypt);
+
     if (strcmp(argv[1], "md5") == 0)
     {
-        md5_main(buffer);
+        md5_main(encrypt);
     }
     else if (strcmp(argv[1], "sha256") == 0)
     {

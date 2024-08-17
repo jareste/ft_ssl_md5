@@ -9,11 +9,11 @@ RELEASE_CFLAGS = $(CFLAGS) -DNDEBUG
 #########
 
 #########
-FILES = main md5 ft_malloc
+FILES = main md5 ft_malloc parse_arg
 
 SRC = $(addsuffix .c, $(FILES))
 
-vpath %.c srcs srcs/md5 inc
+vpath %.c srcs srcs/md5 inc srcs/parse_arg
 #########
 
 #########
@@ -25,7 +25,7 @@ DEP = $(addsuffix .d, $(basename $(OBJ)))
 #########
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
-	${CC} -MMD $(CFLAGS) -c -Isrcs/md5 -Iinc $< -o $@
+	${CC} -MMD $(CFLAGS) -c -Isrcs/md5 -Iinc -Isrcs/parse_arg $< -o $@
 
 all: 
 	$(MAKE) $(NAME)
