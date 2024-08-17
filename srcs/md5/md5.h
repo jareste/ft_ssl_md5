@@ -6,6 +6,6 @@
 
 /* output can be checked with: https://www.md5hashgenerator.com */
 
-void md5_main(int argc, char **argv);
+void md5_main(char *encrypt);
 
 #endif

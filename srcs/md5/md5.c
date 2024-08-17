@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ft_malloc.h>
 
 typedef struct
 {
@@ -48,7 +49,8 @@ static void md5(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest)
         new_len++;
     }
 
-    msg = calloc(new_len + 8, 1);
+    msg = malloc(new_len + 8);
+    memset(msg, 0, new_len + 8);
     memcpy(msg, initial_msg, initial_len);
     msg[initial_len] = 0x80;
 
@@ -116,10 +118,10 @@ static void md5(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest)
     free(msg);
 }
 
-void md5_main(int argc, char **argv)
+void md5_main(char *encrypt)
 {
     uint8_t digest[16];
-    md5((uint8_t*) argv[argc - 1], strlen(argv[argc - 1]), digest);
+    md5((uint8_t*)encrypt, strlen(encrypt), digest);
 
     printf("MD5: ");
     for (int i = 0; i < 16; i++)

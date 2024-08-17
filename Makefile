@@ -8,11 +8,11 @@ LDFLAGS = -lm
 #########
 
 #########
-FILES = main md5
+FILES = main md5 ft_malloc
 
 SRC = $(addsuffix .c, $(FILES))
 
-vpath %.c srcs srcs/md5
+vpath %.c srcs srcs/md5 inc
 #########
 
 #########
@@ -24,7 +24,7 @@ DEP = $(addsuffix .d, $(basename $(OBJ)))
 #########
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
-	${CC} -MMD $(CFLAGS) -c -Isrcs/md5 $< -o $@
+	${CC} -MMD $(CFLAGS) -c -Isrcs/md5 -Iinc $< -o $@
 
 all: 
 	$(MAKE) $(NAME)
