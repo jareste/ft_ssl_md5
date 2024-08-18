@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ft_ssl.h>
+#include <utils.h>
 
 typedef struct
 {
@@ -129,12 +130,77 @@ void sha256_main(char* encrypt, char* procedence, input_type type, int flags)
     uint8_t digest[32];
     sha256((uint8_t*)encrypt, strlen(encrypt), digest);
 
-    UNUSED_PARAM(flags);
-    UNUSED_PARAM(type);
+    if (!(flags & Q_FLAG) && !(flags & R_FLAG))
+    {
+        switch (type)
+        {
+            case TYPE_NORMAL:
+                printf("SHA-256 (\"");
+                print_without_newline(encrypt);
+                printf("\") = ");
+                break;
+            case TYPE_FILE:
+                printf("SHA-256 (");
+                print_without_newline(procedence);
+                printf(") = ");
+                break;
+            case TYPE_STDIN:
+                /* handled outside */
+                break;
+            case TYPE_STDIN_NORMAL:
+                /* handled outside */
+                break;
+        }
+    }
 
-    printf("SHA-256: %s ", procedence);
+    if (!(flags & Q_FLAG) && ((type == TYPE_STDIN) || (type == TYPE_STDIN_NORMAL)))
+    {
+        if (flags & P_FLAG) printf("(\""); else printf("(");
+            
+        print_without_newline(procedence);
+        
+        if (flags & P_FLAG) printf("\")= "); else printf(")= ");
+            
+    }
+
     for (int i = 0; i < 32; i++)
         printf("%2.2x", digest[i]);
+    
+    if (!(flags & Q_FLAG) && (flags & R_FLAG))
+    {
+        switch (type)
+        {
+            case TYPE_NORMAL:
+                printf(" \"");
+                print_without_newline(encrypt);
+                printf("\"");
+                break;
+            case TYPE_FILE:
+                printf(" ");
+                print_without_newline(procedence);
+                break;
+            case TYPE_STDIN:
+                /* handled outside */
+                // if (flags & P_FLAG) printf(" \""); else printf(" ");
+                    
+                // print_without_newline(procedence);
+                
+                // if (flags & P_FLAG) printf("\""); else printf(" ");
+                    
+                break;
+            case TYPE_STDIN_NORMAL:
+                /* handled outside */
+                // if (flags & P_FLAG) printf(" \""); else printf(" ");
+                    
+                // print_without_newline(procedence);
+                
+                // if (flags & P_FLAG) printf("\""); else printf(" ");
+                    
+                break;
+        }
+    }
+
+
     printf("\n");
 }
 

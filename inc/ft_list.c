@@ -8,13 +8,14 @@ list_t* list_get_next(list_t *node)
     return node->next;
 }
 
-void list_add_last(list_t **head, char *data, char *procedence)
+void list_add_last(list_t **head, char *data, char *procedence, input_type type)
 {
     if (data == NULL || procedence == NULL) return;
     
     list_t *new_node = malloc(sizeof(list_t));
     new_node->node.data = strdup(data);
     new_node->node.procedence = strdup(procedence);
+    new_node->node.type = type;
     new_node->next = NULL;
 
     if (*head == NULL)

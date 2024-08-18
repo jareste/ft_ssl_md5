@@ -146,7 +146,7 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* 
             case 's':
                 if (optarg)
                 {
-                    list_add_last(list, optarg, optarg);
+                    list_add_last(list, optarg, optarg, TYPE_NORMAL);
                 }
                 else
                 {
@@ -166,7 +166,7 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* 
         read_file(argv[i], &stdin_buffer);
         if (stdin_buffer)
         {
-            list_add_last(list, stdin_buffer, argv[i]);
+            list_add_last(list, stdin_buffer, argv[i], TYPE_FILE);
             free(stdin_buffer);
             stdin_buffer = NULL;
         }
@@ -182,7 +182,7 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* 
     /* chekc if something to read from stdin. */
     if (!isatty(fileno(stdin)) && (*flags & P_FLAG || *list == NULL)) {
         read_stdin(&stdin_buffer);
-        list_add_last(list, stdin_buffer, (*flags & P_FLAG) ? stdin_buffer : "stdin");
+        list_add_last(list, stdin_buffer, (*flags & P_FLAG) ? stdin_buffer : "stdin", (*flags & P_FLAG) ? TYPE_STDIN_NORMAL : TYPE_STDIN);
         free(stdin_buffer);
     }
 }

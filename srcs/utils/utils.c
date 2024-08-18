@@ -16,6 +16,8 @@ void exec_algorithm(void *encrypt, int flags, algorithms algorithm)
 
     while (list)
     {
+        printf("algo: %d\n", algorithm);
+        printf("MD5: %d\n", MD5);
         switch (algorithm)
         {
         case MD5:
@@ -34,4 +36,17 @@ void exec_algorithm(void *encrypt, int flags, algorithms algorithm)
     /* reset list pointer for cleaning */
     list = (list_t *)encrypt;
     list_clear(&list);
+}
+
+void print_without_newline(const char *str)
+{
+    size_t len = strlen(str);
+    if (len > 0 && str[len - 1] == '\n')
+    {
+        fwrite(str, 1, len - 1, stdout);
+    }
+    else
+    {
+        printf("%s", str);
+    }
 }
