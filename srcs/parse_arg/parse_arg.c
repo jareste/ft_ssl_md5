@@ -185,4 +185,12 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* 
         list_add_last(list, stdin_buffer, (*flags & P_FLAG) ? stdin_buffer : "stdin", (*flags & P_FLAG) ? TYPE_STDIN_NORMAL : TYPE_STDIN);
         free(stdin_buffer);
     }
+
+    /* no input recieved, so we read from stdin. */
+    if ((*list == NULL))
+    {
+        read_stdin(&stdin_buffer);
+        list_add_last(list, stdin_buffer, (*flags & P_FLAG) ? stdin_buffer : "stdin", (*flags & P_FLAG) ? TYPE_STDIN_NORMAL : TYPE_STDIN);
+        free(stdin_buffer);
+    }
 }
