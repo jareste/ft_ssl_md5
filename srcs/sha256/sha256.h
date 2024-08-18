@@ -2,7 +2,8 @@
 #define SHA256_H
 
 #include <stdint.h>
+#include <ft_ssl.h>
 
-void sha256_main(char *encrypt, char* procedence, int flags);
+void sha256_main(char *encrypt, char* procedence, input_type type, int flags);
 
 #endif

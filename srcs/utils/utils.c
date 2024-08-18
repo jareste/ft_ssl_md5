@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-void exec_algorithm(void *encrypt, int flags, int algorithm)
+void exec_algorithm(void *encrypt, int flags, algorithms algorithm)
 {
     list_t *list = (list_t *)encrypt;
 
@@ -19,10 +19,10 @@ void exec_algorithm(void *encrypt, int flags, int algorithm)
         switch (algorithm)
         {
         case MD5:
-            md5_main(list->node.data, list->node.procedence, flags);
+            md5_main(get_data(list), get_procedence(list), get_type(list), flags);
             break;
         case SHA256:
-            sha256_main(list->node.data, list->node.procedence, flags);
+            sha256_main(get_data(list), get_procedence(list), get_type(list), flags);
             break;
         default:
             ft_assert(0, "Fatal error: Unknown algorithm.");

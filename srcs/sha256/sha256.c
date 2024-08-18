@@ -124,12 +124,13 @@ static void sha256(const uint8_t *initial_msg, size_t initial_len, uint8_t *dige
     free(msg);
 }
 
-void sha256_main(char* encrypt, char* procedence, int flags)
+void sha256_main(char* encrypt, char* procedence, input_type type, int flags)
 {
     uint8_t digest[32];
     sha256((uint8_t*)encrypt, strlen(encrypt), digest);
 
     UNUSED_PARAM(flags);
+    UNUSED_PARAM(type);
 
     printf("SHA-256: %s ", procedence);
     for (int i = 0; i < 32; i++)

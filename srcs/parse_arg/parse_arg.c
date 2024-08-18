@@ -95,7 +95,7 @@ static void read_stdin(char **encrypt)
     *encrypt = buffer;
 }
 
-static int check_algorithm(char *algorithm)
+static algorithms check_algorithm(char *algorithm)
 {
     if (algorithm == NULL) goto error;
 
@@ -103,7 +103,12 @@ static int check_algorithm(char *algorithm)
     {
         if (strcasecmp(algorithm, g_algorithms[i]) == 0)
         {
-            return (i + 1);
+            if (i == 0)
+                return MD5;
+            else if (i == 1)
+                return SHA256;
+            else if (i == 2 || i == 3 || i == 4)
+                return HELP;
         }
     }
 
@@ -113,7 +118,7 @@ error:
     exit(EXIT_FAILURE);
 }
 
-void parse_args(int argc, char *argv[], int *flags, void** encrypt, int* algorithm)
+void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* algorithm)
 {
     int opt;
     char* stdin_buffer = NULL;

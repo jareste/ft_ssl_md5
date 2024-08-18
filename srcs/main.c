@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 {
     int flags = 0;
     void *encrypt = NULL;
-    int algorithm = NONE;
+    algorithms algorithm = NONE;
 
     if (argc < 2) usage(0);
 

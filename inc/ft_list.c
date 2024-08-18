@@ -60,6 +60,21 @@ void list_remove_single(list_t **head, list_t *node_to_remove)
     }
 }
 
+char* get_data(list_t *node)
+{
+    return node->node.data;
+}
+
+char* get_procedence(list_t *node)
+{
+    return node->node.procedence;
+}
+
+input_type get_type(list_t *node)
+{
+    return node->node.type;
+}
+
 void list_clear(list_t **head)
 {
     list_t *current = *head;
