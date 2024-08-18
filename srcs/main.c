@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 {
     int flags = 0;
     list_t *encrypt = NULL;
-    int mode = 2;
+    int algorithm = NONE;
 
     if (argc < 2)
     {
@@ -26,18 +26,18 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    parse_args(argc, argv, &flags, (void**)&encrypt, &mode);
+    parse_args(argc, argv, &flags, (void**)&encrypt, &algorithm);
     if (encrypt == NULL)
     {
         printf("ft_ssl: Error: No input data.\n");
         return 1;
     }
 
-    if (mode == 0)
+    if (algoithm == MD5)
     {
         md5_main(encrypt->data, flags);
     }
-    else if (mode == 1)
+    else if (algorithm == SHA256)
     {
         sha256_main(encrypt->data, flags);
     }

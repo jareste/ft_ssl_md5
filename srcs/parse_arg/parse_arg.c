@@ -32,7 +32,7 @@ static void read_stdin(char **encrypt) {
     *encrypt = buffer;
 }
 
-void parse_args(int argc, char *argv[], int *flags, void** encrypt, int* mode)
+void parse_args(int argc, char *argv[], int *flags, void** encrypt, int* algorithm)
 {
     int opt;
     char* stdin_buffer = NULL;
@@ -40,12 +40,12 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, int* mode)
 
     if (strcasecmp(argv[1], "md5") == 0)
     {
-        *mode = 0;
+        *algorithm = MD5;
         // printf("MD5\n");
     }
     else if (strcasecmp(argv[1], "sha256") == 0)
     {
-        *mode = 1;
+        *algorithm = SHA256;
         // printf("SHA256\n");
     }
     else if (strcasecmp(argv[1], "help") == 0)
