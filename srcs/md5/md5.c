@@ -130,6 +130,7 @@ void md5_main(char *encrypt, char* procedence, input_type type, int flags)
     uint8_t digest[16];
     md5((uint8_t*)encrypt, strlen(encrypt), digest);
 
+    /**/
     if (!(flags & Q_FLAG) && !(flags & R_FLAG))
     {
         switch (type)
@@ -163,11 +164,13 @@ void md5_main(char *encrypt, char* procedence, input_type type, int flags)
             
     }
 
+    /* Print digest */
     for (int i = 0; i < 16; i++)
     {
         printf("%2.2x", digest[i]);
     }
 
+    /**/
     if (!(flags & Q_FLAG) && (flags & R_FLAG))
     {
         switch (type)
@@ -183,21 +186,9 @@ void md5_main(char *encrypt, char* procedence, input_type type, int flags)
                 break;
             case TYPE_STDIN:
                 /* handled outside */
-                // if (flags & P_FLAG) printf(" \""); else printf(" ");
-                    
-                // print_without_newline(procedence);
-                
-                // if (flags & P_FLAG) printf("\""); else printf(" ");
-                    
                 break;
             case TYPE_STDIN_NORMAL:
                 /* handled outside */
-                // if (flags & P_FLAG) printf(" \""); else printf(" ");
-                    
-                // print_without_newline(procedence);
-                
-                // if (flags & P_FLAG) printf("\""); else printf(" ");
-                    
                 break;
         }
     }

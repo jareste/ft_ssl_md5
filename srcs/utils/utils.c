@@ -16,8 +16,6 @@ void exec_algorithm(void *encrypt, int flags, algorithms algorithm)
 
     while (list)
     {
-        printf("algo: %d\n", algorithm);
-        printf("MD5: %d\n", MD5);
         switch (algorithm)
         {
         case MD5:
