@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 {
     int flags = 0;
     list_t *encrypt = NULL;
-    char* filename = NULL;
+    int mode = 2;
 
     if (argc < 2)
     {
@@ -26,18 +26,18 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    parse_args(argc, argv, &flags, (void**)&encrypt, &filename);
+    parse_args(argc, argv, &flags, (void**)&encrypt, &mode);
     if (encrypt == NULL)
     {
         printf("ft_ssl: Error: No input data.\n");
         return 1;
     }
 
-    if (strcmp(argv[1], "md5") == 0)
+    if (mode == 0)
     {
         md5_main(encrypt->data, flags);
     }
-    else if (strcmp(argv[1], "sha256") == 0)
+    else if (mode == 1)
     {
         sha256_main(encrypt->data, flags);
     }

@@ -32,7 +32,7 @@ static void read_stdin(char **encrypt) {
     *encrypt = buffer;
 }
 
-void parse_args(int argc, char *argv[], int *flags, void** encrypt, char** filename)
+void parse_args(int argc, char *argv[], int *flags, void** encrypt, int* mode)
 {
     int opt;
     char* stdin_buffer = NULL;
@@ -40,10 +40,12 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, char** filen
 
     if (strcasecmp(argv[1], "md5") == 0)
     {
+        *mode = 0;
         // printf("MD5\n");
     }
     else if (strcasecmp(argv[1], "sha256") == 0)
     {
+        *mode = 1;
         // printf("SHA256\n");
     }
     else if (strcasecmp(argv[1], "help") == 0)
@@ -56,7 +58,6 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, char** filen
         exit(1);
     }
 
-    UNUSED_PARAM(filename);
     while ((opt = getopt(argc, argv, "?hpqrs:")) != -1)
     {
         switch (opt)
@@ -75,7 +76,15 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, char** filen
                 *flags |= R_FLAG;
                 break;
             case 's':
-                *encrypt = strdup(optarg);
+                if (optarg)
+                {
+                    list_add_last(list, optarg);
+                }
+                else
+                {
+                    fprintf(stderr, "Option -l contains garbage as argument: %s.\n", optarg);
+                    fprintf(stderr, "This will become fatal error in the future.\n");
+                }
                 break;
             default:
                 // print_usage();

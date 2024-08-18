@@ -40,5 +40,6 @@ char *ft_strdup(const char *s)
     size_t len = strlen(s);
     char *new_s = ft_malloc(len + 1);
     strcpy(new_s, s);
+    new_s[len] = '\0';
     return new_s;
 }
