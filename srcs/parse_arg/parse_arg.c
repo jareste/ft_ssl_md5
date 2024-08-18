@@ -37,11 +37,11 @@ void parse_args(int argc, char *argv[], int *flags, char** encrypt, char** filen
 
     if (strcasecmp(argv[1], "md5") == 0)
     {
-        printf("MD5\n");
+        // printf("MD5\n");
     }
     else if (strcasecmp(argv[1], "sha256") == 0)
     {
-        printf("SHA256\n");
+        // printf("SHA256\n");
     }
     else if (strcasecmp(argv[1], "help") == 0)
     {

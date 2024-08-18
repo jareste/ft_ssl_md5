@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     }
     else if (strcmp(argv[1], "sha256") == 0)
     {
-        // sha256_main(encrypt, flags);
+        sha256_main(encrypt, flags);
     }
     else
     {

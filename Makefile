@@ -9,7 +9,7 @@ RELEASE_CFLAGS = $(CFLAGS) -DNDEBUG
 #########
 
 #########
-FILES = main md5 ft_malloc parse_arg #sha256
+FILES = main md5 ft_malloc parse_arg sha256
 
 SRC = $(addsuffix .c, $(FILES))
 
