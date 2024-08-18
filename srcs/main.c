@@ -4,6 +4,7 @@
 #include <ft_malloc.h>
 #include <parse_arg.h>
 #include <sha256.h>
+#include <ft_list.h>
 
 /* TODO */
 void usage()
@@ -16,7 +17,7 @@ void usage()
 int main(int argc, char **argv)
 {
     int flags = 0;
-    char* encrypt = NULL;
+    list_t *encrypt = NULL;
     char* filename = NULL;
 
     if (argc < 2)
@@ -25,15 +26,20 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    parse_args(argc, argv, &flags, &encrypt, &filename);
+    parse_args(argc, argv, &flags, (void**)&encrypt, &filename);
+    if (encrypt == NULL)
+    {
+        printf("ft_ssl: Error: No input data.\n");
+        return 1;
+    }
 
     if (strcmp(argv[1], "md5") == 0)
     {
-        md5_main(encrypt, flags);
+        md5_main(encrypt->data, flags);
     }
     else if (strcmp(argv[1], "sha256") == 0)
     {
-        sha256_main(encrypt, flags);
+        sha256_main(encrypt->data, flags);
     }
     else
     {
@@ -41,6 +47,8 @@ int main(int argc, char **argv)
         usage();
         return 1;
     }
+
+    list_clear(&encrypt);
 
     return 0;
 }

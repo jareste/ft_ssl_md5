@@ -3,13 +3,13 @@ NAME = ft_ssl
 #########
 RM = rm -rf
 CC = cc
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall -g -fsanitize=address
 LDFLAGS = -lm
 RELEASE_CFLAGS = $(CFLAGS) -DNDEBUG
 #########
 
 #########
-FILES = main md5 ft_malloc parse_arg sha256
+FILES = main md5 ft_malloc parse_arg sha256 ft_list
 
 SRC = $(addsuffix .c, $(FILES))
 
