@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ft_malloc.h>
+#include <ft_ssl.h>
 
 /*
     implementation of md5 algorithm
@@ -124,10 +125,12 @@ static void md5(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest)
     free(msg);
 }
 
-void md5_main(char *encrypt)
+void md5_main(char *encrypt, int flags)
 {
     uint8_t digest[16];
     md5((uint8_t*)encrypt, strlen(encrypt), digest);
+
+    UNUSED_PARAM(flags);
 
     printf("MD5: ");
     for (int i = 0; i < 16; i++)

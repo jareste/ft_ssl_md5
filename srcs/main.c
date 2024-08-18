@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <ft_malloc.h>
 #include <parse_arg.h>
+#include <sha256.h>
 
 /* TODO */
 void usage()
@@ -28,11 +29,11 @@ int main(int argc, char **argv)
 
     if (strcmp(argv[1], "md5") == 0)
     {
-        md5_main(encrypt);
+        md5_main(encrypt, flags);
     }
     else if (strcmp(argv[1], "sha256") == 0)
     {
-        /* TODO */
+        // sha256_main(encrypt, flags);
     }
     else
     {

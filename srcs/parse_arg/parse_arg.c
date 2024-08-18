@@ -35,7 +35,23 @@ void parse_args(int argc, char *argv[], int *flags, char** encrypt, char** filen
 {
     int opt;
 
-    
+    if (strcasecmp(argv[1], "md5") == 0)
+    {
+        printf("MD5\n");
+    }
+    else if (strcasecmp(argv[1], "sha256") == 0)
+    {
+        printf("SHA256\n");
+    }
+    else if (strcasecmp(argv[1], "help") == 0)
+    {
+        // print_usage();
+    }
+    else
+    {
+        fprintf(stderr, "Invalid command: '%s'; try 'help' for a list.\n", argv[1]);
+        exit(1);
+    }
 
     UNUSED_PARAM(filename);
     while ((opt = getopt(argc, argv, "?hpqrs:")) != -1)
