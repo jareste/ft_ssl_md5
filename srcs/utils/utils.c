@@ -19,10 +19,10 @@ void exec_algorithm(void *encrypt, int flags, int algorithm)
         switch (algorithm)
         {
         case MD5:
-            md5_main(list->data, flags);
+            md5_main(list->node.data, list->node.procedence, flags);
             break;
         case SHA256:
-            sha256_main(list->data, flags);
+            sha256_main(list->node.data, list->node.procedence, flags);
             break;
         default:
             ft_assert(0, "Fatal error: Unknown algorithm.");

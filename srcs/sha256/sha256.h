@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-void sha256_main(char *encrypt, int flags);
+void sha256_main(char *encrypt, char* procedence, int flags);
 
 #endif

@@ -10,6 +10,7 @@
 #include <ctype.h>
 #include <ft_ssl.h>
 #include <ft_list.h>
+#include <errno.h>
 
 /***************************/
 /*        DEFINES          */
@@ -28,14 +29,60 @@ static const char *g_algorithms[] = {
 /*        METHODS          */
 /***************************/
 
-static void read_stdin(char **encrypt) {
+static void read_file(const char *filename, char **content)
+{
+    if (access(filename, F_OK) != 0)
+    {
+        fprintf(stderr, "ft_ssl: %s: No such file or directory\n", filename);
+        return;
+    }
+
+    if (access(filename, R_OK) != 0)
+    {
+        fprintf(stderr, "ft_ssl: %s: Permission denied\n", filename);
+        return;
+    }
+
+    FILE *file = fopen(filename, "rb");
+    if (!file)
+    {
+        fprintf(stderr, "ft_ssl: %s: %s\n", filename, strerror(errno));
+        /* NEVER HERE */
+        ft_assert(file, "Fatal error: Could not open file.");
+    }
+
+    fseek(file, 0, SEEK_END);
+    long file_size = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
+    *content = malloc(file_size + 1);
+
+    size_t read_size = fread(*content, 1, file_size, file);
+    if (read_size != (size_t)file_size)
+    {
+        perror("Error reading file");
+        free(*content);
+        fclose(file);
+        exit(EXIT_FAILURE);
+    }
+
+    (*content)[file_size] = '\0';
+
+    fclose(file);
+}
+
+
+static void read_stdin(char **encrypt)
+{
     size_t buffer_size = 1024;
     size_t total_size = 0;
     char *buffer = malloc(buffer_size);
     int c;
 
-    while ((c = getchar()) != EOF) {
-        if (total_size + 1 >= buffer_size) {
+    while ((c = getchar()) != EOF)
+    {
+        if (total_size + 1 >= buffer_size)
+        {
             buffer_size *= 2;
             char *new_buffer = realloc(buffer, buffer_size);
             buffer = new_buffer;
@@ -94,7 +141,7 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, int* algorit
             case 's':
                 if (optarg)
                 {
-                    list_add_last(list, optarg);
+                    list_add_last(list, optarg, optarg);
                 }
                 else
                 {
@@ -108,6 +155,18 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, int* algorit
         }
     }
 
+    stdin_buffer = NULL;
+    for (int i = optind+1; i < argc; i++)
+    {
+        read_file(argv[i], &stdin_buffer);
+        if (stdin_buffer)
+        {
+            list_add_last(list, stdin_buffer, argv[i]);
+            free(stdin_buffer);
+            stdin_buffer = NULL;
+        }
+    }
+
     if (optind >= argc)
     {
         fprintf(stderr, "Expected argument after options\n");
@@ -116,9 +175,9 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, int* algorit
     }
 
     /* chekc if something to read from stdin. */
-    if (!isatty(fileno(stdin))) {
+    if (!isatty(fileno(stdin)) && (*flags & P_FLAG || *list == NULL)) {
         read_stdin(&stdin_buffer);
-        list_add_last(list, stdin_buffer);
+        list_add_last(list, stdin_buffer, (*flags & P_FLAG) ? stdin_buffer : "stdin");
         free(stdin_buffer);
     }
 }

@@ -8,12 +8,13 @@ list_t* list_get_next(list_t *node)
     return node->next;
 }
 
-void list_add_last(list_t **head, char *data)
+void list_add_last(list_t **head, char *data, char *procedence)
 {
-    if (data == NULL) return;
+    if (data == NULL || procedence == NULL) return;
     
     list_t *new_node = malloc(sizeof(list_t));
-    new_node->data = strdup(data);
+    new_node->node.data = strdup(data);
+    new_node->node.procedence = strdup(procedence);
     new_node->next = NULL;
 
     if (*head == NULL)
@@ -39,7 +40,7 @@ void list_remove_single(list_t **head, list_t *node_to_remove)
     {
         list_t *temp = *head;
         *head = (*head)->next;
-        free(temp->data);
+        free(temp->node.data);
         free(temp);
         return;
     }
@@ -54,7 +55,7 @@ void list_remove_single(list_t **head, list_t *node_to_remove)
     {
         list_t *temp = current->next;
         current->next = temp->next;
-        free(temp->data);
+        free(temp->node.data);
         free(temp);
     }
 }
@@ -67,7 +68,8 @@ void list_clear(list_t **head)
     while (current != NULL)
     {
         next_node = current->next;
-        free(current->data);
+        free(current->node.data);
+        free(current->node.procedence);
         free(current);
         current = next_node;
     }
@@ -82,7 +84,7 @@ void list_print(list_t *head)
     list_t *current = head;
     while (current != NULL)
     {
-        printf("%s -> ", current->data);
+        printf("%s -> ", current->node.data);
         current = current->next;
     }
     printf("NULL\n");
