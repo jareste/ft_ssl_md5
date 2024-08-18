@@ -3,17 +3,17 @@ NAME = ft_ssl
 #########
 RM = rm -rf
 CC = cc
-CFLAGS = -Werror -Wextra -Wall -g -fsanitize=address
+CFLAGS = -Werror -Wextra -Wall #-g -fsanitize=address
 LDFLAGS = -lm
 RELEASE_CFLAGS = $(CFLAGS) -DNDEBUG
 #########
 
 #########
-FILES = main md5 ft_malloc parse_arg sha256 ft_list
+FILES = main md5 ft_malloc parse_arg sha256 ft_list utils
 
 SRC = $(addsuffix .c, $(FILES))
 
-vpath %.c srcs srcs/md5 inc srcs/parse_arg srcs/sha256
+vpath %.c srcs srcs/md5 inc srcs/parse_arg srcs/sha256 srcs/utils
 #########
 
 #########
@@ -25,7 +25,7 @@ DEP = $(addsuffix .d, $(basename $(OBJ)))
 #########
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
-	${CC} -MMD $(CFLAGS) -c -Isrcs/md5 -Iinc -Isrcs/parse_arg -Isrcs/sha256 $< -o $@
+	${CC} -MMD $(CFLAGS) -c -Isrcs/md5 -Iinc -Isrcs/parse_arg -Isrcs/sha256 -Isrcs/utils $< -o $@
 
 all: 
 	$(MAKE) $(NAME)

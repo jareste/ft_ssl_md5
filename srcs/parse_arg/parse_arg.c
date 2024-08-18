@@ -35,21 +35,16 @@ static void read_stdin(char **encrypt) {
     int c;
 
     while ((c = getchar()) != EOF) {
-        printf("c: %c\n", c);
         if (total_size + 1 >= buffer_size) {
             buffer_size *= 2;
-            buffer = realloc(buffer, buffer_size);
+            char *new_buffer = realloc(buffer, buffer_size);
+            buffer = new_buffer;
         }
         buffer[total_size++] = (char)c;
     }
 
-    if (total_size == 0) {
-        free(buffer);
-        *encrypt = NULL;
-        return;
-    }
-
     buffer[total_size] = '\0';
+
     *encrypt = buffer;
 }
 
@@ -61,10 +56,10 @@ static int check_algorithm(char *algorithm)
     {
         if (strcasecmp(algorithm, g_algorithms[i]) == 0)
         {
-            return i;
+            return (i + 1);
         }
     }
-    
+
 error:
     fprintf(stderr, "ft_ssl: Error: '%s' is an invalid command.\n", algorithm);
     // print_usage();
@@ -122,7 +117,7 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, int* algorit
 
     /* chekc if something to read from stdin. */
     if (!isatty(fileno(stdin))) {
-        read_stdin((char **)encrypt);
+        read_stdin(&stdin_buffer);
         list_add_last(list, stdin_buffer);
         free(stdin_buffer);
     }

@@ -11,6 +11,7 @@ list_t* list_get_next(list_t *node)
 void list_add_last(list_t **head, char *data)
 {
     if (data == NULL) return;
+    
     list_t *new_node = malloc(sizeof(list_t));
     new_node->data = strdup(data);
     new_node->next = NULL;
@@ -74,13 +75,15 @@ void list_clear(list_t **head)
     *head = NULL;
 }
 
-// void list_print(list_t *head)
-// {
-//     list_t *current = head;
-//     while (current != NULL)
-//     {
-//         printf("%s -> ", current->data);
-//         current = current->next;
-//     }
-//     printf("NULL\n");
-// }
+
+#include <stdio.h>
+void list_print(list_t *head)
+{
+    list_t *current = head;
+    while (current != NULL)
+    {
+        printf("%s -> ", current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
