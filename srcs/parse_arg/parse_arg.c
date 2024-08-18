@@ -1,3 +1,7 @@
+/***************************/
+/*        INCLUDES         */
+/***************************/
+
 #include <ft_malloc.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,6 +10,23 @@
 #include <ctype.h>
 #include <ft_ssl.h>
 #include <ft_list.h>
+
+/***************************/
+/*        DEFINES          */
+/***************************/
+
+static const char *g_algorithms[] = {
+    "md5",
+    "sha256",
+    "help",
+    "--help",
+    "-h",
+    NULL
+};
+
+/***************************/
+/*        METHODS          */
+/***************************/
 
 static void read_stdin(char **encrypt) {
     size_t buffer_size = 1024;
@@ -32,31 +53,31 @@ static void read_stdin(char **encrypt) {
     *encrypt = buffer;
 }
 
+static int check_algorithm(char *algorithm)
+{
+    if (algorithm == NULL) goto error;
+
+    for (int i = 0; g_algorithms[i]; i++)
+    {
+        if (strcasecmp(algorithm, g_algorithms[i]) == 0)
+        {
+            return i;
+        }
+    }
+    
+error:
+    fprintf(stderr, "ft_ssl: Error: '%s' is an invalid command.\n", algorithm);
+    // print_usage();
+    exit(EXIT_FAILURE);
+}
+
 void parse_args(int argc, char *argv[], int *flags, void** encrypt, int* algorithm)
 {
     int opt;
     char* stdin_buffer = NULL;
     list_t **list = (list_t **)encrypt;
 
-    if (strcasecmp(argv[1], "md5") == 0)
-    {
-        *algorithm = MD5;
-        // printf("MD5\n");
-    }
-    else if (strcasecmp(argv[1], "sha256") == 0)
-    {
-        *algorithm = SHA256;
-        // printf("SHA256\n");
-    }
-    else if (strcasecmp(argv[1], "help") == 0)
-    {
-        // print_usage();
-    }
-    else
-    {
-        fprintf(stderr, "Invalid command: '%s'; try 'help' for a list.\n", argv[1]);
-        exit(1);
-    }
+    *algorithm = check_algorithm(argv[1]);
 
     while ((opt = getopt(argc, argv, "?hpqrs:")) != -1)
     {
