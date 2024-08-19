@@ -18,6 +18,7 @@ typedef enum {
     MD5,
     SHA256,
     WHIRLPOOL,
+    BLAKE2S,
     HELP,
     NONE
 } algorithms;
