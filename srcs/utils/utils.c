@@ -70,6 +70,9 @@ void print_usage(algorithms algo, int code)
     case SHA256:
         printf("%s\n", USAGE_SHA256);
         break;
+    case WHIRLPOOL:
+        printf("%s\n", USAGE_WHIRLPOOL);
+        break;
     default:
         /* NEVER HERE */
         usage(code);

@@ -28,11 +28,22 @@ void print_usage(algorithms algo, int code);
                      "  ft_ssl sha256 -r -s \"hello world\" file.txt\n" \
                      "  ft_ssl sha256 file1.txt file2.txt\n"
 
+#define USAGE_WHIRLPOOL "Usage: ft_ssl whirlpool [flags] [file/string]\n\n" \
+                        "Flags:\n" \
+                        "  -p             Echo STDIN to STDOUT and append the checksum to STDOUT.\n" \
+                        "  -q             Quiet mode - only the hash is printed.\n" \
+                        "  -r             Reverse the format of the output (hash followed by file/string).\n" \
+                        "  -s  <string>   Print the sum of the given string.\n\n" \
+                        "Examples:\n" \
+                        "  ft_ssl whirlpool -p -q -s \"hola\" file.txt\n" \
+                        "  ft_ssl whirlpool -r -s \"hello world\" file.txt\n" \
+                        "  ft_ssl whirlpool file1.txt file2.txt\n"
 
 #define USAGE "Usage: ft_ssl command [flags] [file/string]\n\n" \
               "Commands:\n" \
-              "  md5      Compute the MD5 hash.\n" \
-              "  sha256   Compute the SHA-256 hash.\n\n" \
+              "  md5       Compute the MD5 hash.\n" \
+              "  sha256    Compute the SHA-256 hash.\n\n" \
+              "  whirlpool Compute the Whirlpool hash.\n\n" \
               "Flags:\n" \
               "  -p             Echo STDIN to STDOUT and append the checksum to STDOUT.\n" \
               "  -q             Quiet mode - only the hash is printed.\n" \
