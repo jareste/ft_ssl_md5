@@ -33,6 +33,7 @@ all:
 $(NAME): $(OBJ) Makefile
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
 	@echo "EVERYTHING DONE  "
+	@./.add_path.sh
 
 release: CFLAGS = $(RELEASE_CFLAGS)
 release: re
