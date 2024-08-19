@@ -4,6 +4,7 @@
 #include <sha256.h>
 #include <string.h>
 #include <ft_ssl.h>
+#include <utils.h>
 
 #include <stdio.h>
 
@@ -47,4 +48,28 @@ void print_without_newline(const char *str)
     {
         printf("%s", str);
     }
+}
+
+void usage(int code)
+{
+    printf("%s\n", USAGE);
+    exit(code);
+}
+
+void print_usage(algorithms algo, int code)
+{
+    switch (algo)
+    {
+    case MD5:
+        printf("%s\n", USAGE_MD5);
+        break;
+    case SHA256:
+        printf("%s\n", USAGE_SHA256);
+        break;
+    default:
+        /* NEVER HERE */
+        usage(code);
+       break;
+    }
+    exit(code);
 }

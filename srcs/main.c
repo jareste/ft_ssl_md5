@@ -8,13 +8,6 @@
 #include <ft_ssl.h>
 #include <utils.h>
 
-/* TODO */
-static void usage(int code)
-{
-    printf("usage: ft_ssl command [flags] [file/string]\n");
-    exit(code);
-}
-
 int main(int argc, char **argv)
 {
     int flags = 0;

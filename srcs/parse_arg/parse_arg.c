@@ -11,6 +11,7 @@
 #include <ft_ssl.h>
 #include <ft_list.h>
 #include <errno.h>
+#include <utils.h>
 
 /***************************/
 /*        DEFINES          */
@@ -114,8 +115,8 @@ static algorithms check_algorithm(char *algorithm)
 
 error:
     fprintf(stderr, "ft_ssl: Error: '%s' is an invalid command.\n", algorithm);
-    // print_usage();
-    exit(EXIT_FAILURE);
+    print_usage(NONE, EXIT_FAILURE); /* EXITS */
+    return NONE;
 }
 
 void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* algorithm)
@@ -132,7 +133,7 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* 
         {
             case '?':
             case 'h':
-                // print_usage();
+                print_usage(*algorithm, EXIT_SUCCESS);
                 exit(0);
             case 'p':
                 *flags |= P_FLAG;
@@ -155,7 +156,7 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* 
                 }
                 break;
             default:
-                // print_usage();
+                print_usage(*algorithm, EXIT_FAILURE);
                 exit(1);
         }
     }
@@ -175,7 +176,7 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* 
     if (optind >= argc)
     {
         fprintf(stderr, "Expected argument after options\n");
-        // print_usage();
+        print_usage(*algorithm, EXIT_FAILURE);
         exit(1);
     }
 
