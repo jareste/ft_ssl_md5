@@ -42,8 +42,9 @@ void print_usage(algorithms algo, int code);
 #define USAGE "Usage: ft_ssl command [flags] [file/string]\n\n" \
               "Commands:\n" \
               "  md5       Compute the MD5 hash.\n" \
-              "  sha256    Compute the SHA-256 hash.\n\n" \
-              "  whirlpool Compute the Whirlpool hash.\n\n" \
+              "  sha256    Compute the SHA-256 hash.\n" \
+              "  whirlpool Compute the Whirlpool hash.\n" \
+              "\n"\
               "Flags:\n" \
               "  -p             Echo STDIN to STDOUT and append the checksum to STDOUT.\n" \
               "  -q             Quiet mode - only the hash is printed.\n" \
