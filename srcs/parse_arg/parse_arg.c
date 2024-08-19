@@ -20,6 +20,7 @@
 static const char *g_algorithms[] = {
     "md5",
     "sha256",
+    "whirlpool",
     "help",
     "--help",
     "-h",
@@ -108,7 +109,9 @@ static algorithms check_algorithm(char *algorithm)
                 return MD5;
             else if (i == 1)
                 return SHA256;
-            else if (i == 2 || i == 3 || i == 4)
+            else if (i == 2)
+                return WHIRLPOOL;
+            else if (i == 3 || i == 4 || i == 5)
                 return HELP;
         }
     }

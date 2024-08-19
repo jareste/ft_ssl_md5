@@ -7,6 +7,7 @@
 #include <ft_list.h>
 #include <ft_ssl.h>
 #include <utils.h>
+#include <whirlpool.h>
 
 int main(int argc, char **argv)
 {
@@ -25,6 +26,8 @@ int main(int argc, char **argv)
     }
 
     exec_algorithm(encrypt, flags, algorithm);
+
+
 
     return 0;
 }

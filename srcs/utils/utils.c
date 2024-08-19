@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ft_ssl.h>
 #include <utils.h>
+#include <whirlpool.h>
 
 #include <stdio.h>
 
@@ -24,6 +25,9 @@ void exec_algorithm(void *encrypt, int flags, algorithms algorithm)
             break;
         case SHA256:
             sha256_main(get_data(list), get_procedence(list), get_type(list), flags);
+            break;
+        case WHIRLPOOL:
+            whirlpool_main(get_data(list), get_procedence(list), get_type(list), flags);
             break;
         default:
             ft_assert(0, "Fatal error: Unknown algorithm.");
