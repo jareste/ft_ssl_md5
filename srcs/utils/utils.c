@@ -22,16 +22,16 @@ void exec_algorithm(void *encrypt, int flags, algorithms algorithm)
         switch (algorithm)
         {
         case MD5:
-            md5_main(get_data(list), get_procedence(list), get_type(list), flags);
+            md5_main(get_data(list), get_procedence(list), get_type(list), flags, get_size(list));
             break;
         case SHA256:
-            sha256_main(get_data(list), get_procedence(list), get_type(list), flags);
+            sha256_main(get_data(list), get_procedence(list), get_type(list), flags, get_size(list));
             break;
         case WHIRLPOOL:
-            whirlpool_main(get_data(list), get_procedence(list), get_type(list), flags);
+            whirlpool_main(get_data(list), get_procedence(list), get_type(list), flags, get_size(list));
             break;
         case BLAKE2S:
-            blake2s_main(get_data(list), get_procedence(list), get_type(list), flags);
+            blake2s_main(get_data(list), get_procedence(list), get_type(list), flags, get_size(list));
             break;
         default:
             ft_assert(0, "Fatal error: Unknown algorithm.");

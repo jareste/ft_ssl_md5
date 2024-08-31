@@ -1,6 +1,7 @@
 #include <ft_malloc.h>
 #include <stdlib.h>
 #include <ft_list.h>
+#include <string.h>
 
 list_t* list_get_next(list_t *node)
 {
@@ -8,15 +9,18 @@ list_t* list_get_next(list_t *node)
     return node->next;
 }
 
-void list_add_last(list_t **head, char *data, char *procedence, input_type type)
+void list_add_last(list_t **head, char *data, char *procedence, input_type type, size_t size)
 {
     if (data == NULL || procedence == NULL) return;
     
     list_t *new_node = malloc(sizeof(list_t));
-    new_node->node.data = strdup(data);
     new_node->node.procedence = strdup(procedence);
     new_node->node.type = type;
+    new_node->node.size = size;
     new_node->next = NULL;
+
+    new_node->node.data = malloc(size);
+    memcpy(new_node->node.data, data, size);
 
     if (*head == NULL)
     {
@@ -93,6 +97,10 @@ void list_clear(list_t **head)
     *head = NULL;
 }
 
+size_t get_size(list_t *node)
+{
+    return node->node.size;
+}
 
 #include <stdio.h>
 void list_print(list_t *head)

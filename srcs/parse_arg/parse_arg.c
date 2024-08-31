@@ -32,7 +32,7 @@ static const char *g_algorithms[] = {
 /*        METHODS          */
 /***************************/
 
-static void read_file(const char *filename, char **content)
+static void read_file(const char *filename, char **content, size_t *size)
 {
     if (access(filename, F_OK) != 0)
     {
@@ -71,11 +71,14 @@ static void read_file(const char *filename, char **content)
 
     (*content)[file_size] = '\0';
 
+    if (size)
+        *size = file_size;
+
     fclose(file);
 }
 
 
-static void read_stdin(char **encrypt)
+static void read_stdin(char **encrypt, size_t *size)
 {
     size_t buffer_size = 1024;
     size_t total_size = 0;
@@ -94,6 +97,9 @@ static void read_stdin(char **encrypt)
     }
 
     buffer[total_size] = '\0';
+
+    if (size)
+        *size = total_size;
 
     *encrypt = buffer;
 }
@@ -130,6 +136,7 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* 
     int opt;
     char* stdin_buffer = NULL;
     list_t **list = (list_t **)encrypt;
+    size_t size = 0;
 
     *algorithm = check_algorithm(argv[1]);
 
@@ -153,7 +160,7 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* 
             case 's':
                 if (optarg)
                 {
-                    list_add_last(list, optarg, optarg, TYPE_NORMAL);
+                    list_add_last(list, optarg, optarg, TYPE_NORMAL, strlen(optarg));
                 }
                 else
                 {
@@ -170,10 +177,10 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* 
     stdin_buffer = NULL;
     for (int i = optind+1; i < argc; i++)
     {
-        read_file(argv[i], &stdin_buffer);
+        read_file(argv[i], &stdin_buffer, &size);
         if (stdin_buffer)
         {
-            list_add_last(list, stdin_buffer, argv[i], TYPE_FILE);
+            list_add_last(list, stdin_buffer, argv[i], TYPE_FILE, size);
             free(stdin_buffer);
             stdin_buffer = NULL;
         }
@@ -188,16 +195,16 @@ void parse_args(int argc, char *argv[], int *flags, void** encrypt, algorithms* 
 
     /* chekc if something to read from stdin. */
     if (!isatty(fileno(stdin)) && (*flags & P_FLAG || *list == NULL)) {
-        read_stdin(&stdin_buffer);
-        list_add_last(list, stdin_buffer, (*flags & P_FLAG) ? stdin_buffer : "stdin", (*flags & P_FLAG) ? TYPE_STDIN_NORMAL : TYPE_STDIN);
+        read_stdin(&stdin_buffer, &size);
+        list_add_last(list, stdin_buffer, (*flags & P_FLAG) ? stdin_buffer : "stdin", (*flags & P_FLAG) ? TYPE_STDIN_NORMAL : TYPE_STDIN, size);
         free(stdin_buffer);
     }
 
     /* no input recieved, so we read from stdin. */
     if ((*list == NULL))
     {
-        read_stdin(&stdin_buffer);
-        list_add_last(list, stdin_buffer, (*flags & P_FLAG) ? stdin_buffer : "stdin", (*flags & P_FLAG) ? TYPE_STDIN_NORMAL : TYPE_STDIN);
+        read_stdin(&stdin_buffer, &size);
+        list_add_last(list, stdin_buffer, (*flags & P_FLAG) ? stdin_buffer : "stdin", (*flags & P_FLAG) ? TYPE_STDIN_NORMAL : TYPE_STDIN, size);
         free(stdin_buffer);
     }
 }

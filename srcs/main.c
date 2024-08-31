@@ -27,7 +27,5 @@ int main(int argc, char **argv)
 
     exec_algorithm(encrypt, flags, algorithm);
 
-
-
     return 0;
 }

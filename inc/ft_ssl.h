@@ -1,6 +1,8 @@
 #ifndef FT_SSL_H
 #define FT_SSL_H
 
+#include <stddef.h>
+
 #define UNUSED_PARAM(x) (void)(x)
 #define P_FLAG 0x0001
 #define Q_FLAG 0x0002
