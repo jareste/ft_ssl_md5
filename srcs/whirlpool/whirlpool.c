@@ -67,20 +67,6 @@ static inline uint64_t bswap_64(uint64_t x)
 
 
 
-// #if IS_BIG_ENDIAN
-// # define be2me_32(x) (x)
-// # define be2me_64(x) (x)
-// # define le2me_32(x) bswap_32(x)
-// # define le2me_64(x) bswap_64(x)
-
-// # define be32_copy(to, index, from, length) memcpy((char*)(to) + (index), (from), (length))
-// # define le32_copy(to, index, from, length) rhash_swap_copy_str_to_u32((to), (index), (from), (length))
-// # define be64_copy(to, index, from, length) memcpy((char*)(to) + (index), (from), (length))
-// # define le64_copy(to, index, from, length) rhash_swap_copy_str_to_u64((to), (index), (from), (length))
-// # define me64_to_be_str(to, from, length) memcpy((to), (from), (length))
-// # define me64_to_le_str(to, from, length) rhash_swap_copy_u64_to_str((to), (from), (length))
-
-// #else /* IS_BIG_ENDIAN */
 # define be2me_32(x) bswap_32(x)
 # define be2me_64(x) bswap_64(x)
 # define le2me_32(x) (x)
@@ -92,7 +78,6 @@ static inline uint64_t bswap_64(uint64_t x)
 # define le64_copy(to, index, from, length) memcpy((char*)(to) + (index), (from), (length))
 # define me64_to_be_str(to, from, length) rhash_swap_copy_u64_to_str((to), (from), (length))
 # define me64_to_le_str(to, from, length) memcpy((to), (from), (length))
-// #endif /* IS_BIG_ENDIAN */
 
 void rhash_swap_copy_str_to_u64(void* to, int index, const void* from, size_t length)
 {
@@ -149,12 +134,7 @@ extern uint64_t rhash_whirlpool_sbox[8][256];
 	rhash_whirlpool_sbox[6][(int)(src[(shift + 2) & 7] >>  8) & 0xff] ^ \
 	rhash_whirlpool_sbox[7][(int)(src[(shift + 1) & 7]      ) & 0xff])
 
-/**
- * The core transformation. Process a 512-bit block.
- *
- * @param hash algorithm state
- * @param block the message block to process
- */
+
 static void rhash_whirlpool_process_block(uint64_t* hash, uint64_t* p_block)
 {
 	int i;                /* loop counter */
@@ -227,14 +207,7 @@ static void rhash_whirlpool_process_block(uint64_t* hash, uint64_t* p_block)
 	hash[7] ^= state[0][7];
 }
 
-/**
- * Calculate message hash.
- * Can be called repeatedly with chunks of the message to be hashed.
- *
- * @param ctx the algorithm context containing current hashing state
- * @param msg message chunk
- * @param size length of the message chunk
- */
+
 void rhash_whirlpool_update(whirlpool_ctx* ctx, const unsigned char* msg, size_t size)
 {
 	unsigned index = (unsigned)ctx->length & 63;
@@ -279,12 +252,7 @@ void rhash_whirlpool_update(whirlpool_ctx* ctx, const unsigned char* msg, size_t
 	}
 }
 
-/**
- * Store calculated hash into the given array.
- *
- * @param ctx the algorithm context containing current hashing state
- * @param result calculated hash in binary form
- */
+
 void rhash_whirlpool_final(whirlpool_ctx* ctx, unsigned char* result)
 {
 	unsigned index = (unsigned)ctx->length & 63;

@@ -6,9 +6,9 @@ compare_hashes() {
     local ft_ssl_hash="$3"
 
     if [ "$openssl_hash" == "$ft_ssl_hash" ]; then
-        echo "MD5 hashes match for $label."
+        echo "blake2s hashes match for $label."
     else
-        echo "MD5 hashes do not match for $label."
+        echo "blake2s hashes do not match for $label."
         echo "OpenSSL: $openssl_hash"
         echo "ft_ssl:  $ft_ssl_hash"
     fi
@@ -17,8 +17,8 @@ compare_hashes() {
 if [ -p /dev/stdin ]; then
     input=$(cat)
 
-    openssl_output=$(echo -n "$input" | openssl md5)
-    ft_ssl_output=$(echo -n "$input" | ./ft_ssl md5)
+    openssl_output=$(echo -n "$input" | openssl blake2s256)
+    ft_ssl_output=$(echo -n "$input" | ./ft_ssl blake2s)
 
     openssl_hash=$(echo "$openssl_output" | awk -F '= ' '{print $2}' | tr -d ' ')
     ft_ssl_hash=$(echo "$ft_ssl_output" | awk -F '= ' '{print $2}' | tr -d ' ')
